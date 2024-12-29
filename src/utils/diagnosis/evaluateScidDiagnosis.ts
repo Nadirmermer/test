@@ -1,5 +1,6 @@
 import { QuestionState } from '../../types/questions';
 import { scidCriteria, DiagnosisCriteria } from '../../data/assessments/scid-5/criteria';
+import { beckSuicideCriteria } from '../../data/assessments/beck-suicide/criteria';
 
 export interface DiagnosisResult {
   diagnosis: string;
@@ -29,27 +30,10 @@ function evaluateSeverity(criteria: string[], answers: QuestionState['answers'])
 
 // Tanı kriterini değerlendir
 function evaluateCriteria(disorder: DiagnosisCriteria, answers: QuestionState['answers']): DiagnosisResult | null {
-  if (disorder.questions && evaluateMultipleQuestions(disorder.questions, answers)) {
-    return { diagnosis: disorder.diagnosis };
+  const { question, diagnosis } = disorder;
+  if (evaluateSingleQuestion(question, answers)) {
+    return { diagnosis };
   }
-  
-  if (disorder.question && evaluateSingleQuestion(disorder.question, answers)) {
-    return {
-      diagnosis: disorder.diagnosis,
-      additionalInfo: disorder.additionalInfo
-    };
-  }
-  
-  if (disorder.criteria) {
-    const severity = evaluateSeverity(disorder.criteria, answers);
-    if (severity) {
-      return {
-        diagnosis: disorder.diagnosis,
-        severity
-      };
-    }
-  }
-  
   return null;
 }
 
@@ -72,6 +56,16 @@ export function evaluateScidDiagnosis(state: QuestionState): DiagnosisResult[] {
             if (result) diagnoses.push(result);
           }
         });
+      }
+    });
+  });
+
+  // Beck Suicide kategorisini değerlendir
+  Object.values(beckSuicideCriteria).forEach(category => {
+    Object.values(category).forEach(disorder => {
+      if ('diagnosis' in disorder) {
+        const result = evaluateCriteria(disorder, answers);
+        if (result) diagnoses.push(result);
       }
     });
   });

@@ -14,6 +14,12 @@ export const tests: Test[] = [
     startQuestionId: 'BA1',
   },
   {
+    id: 'beck-suicide',
+    name: 'Beck İntihar Düşüncesi Ölçeği',
+    description: 'İntihar düşüncesi ve niyetini değerlendiren 21 maddelik ölçek',
+    startQuestionId: 'Q1',
+  },
+  {
     id: 'scid-5-cv',
     name: 'SCID-5',
     description: "DSM-5'e göre yarı yapılandırılmış görüşme",

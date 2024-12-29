@@ -1,12 +1,11 @@
 import { StyleSheet, Font } from '@react-pdf/renderer';
 
-// Türkçe karakterleri destekleyen font tanımlaması
+// Font dosyalarının public klasöründen yüklenmesi
 Font.register({
   family: 'Roboto',
-  src: 'https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxP.ttf',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxP.ttf' }, // normal
-    { src: 'https://fonts.gstatic.com/s/roboto/v27/KFOlCnqEu92Fr1MmWUlfBBc4.ttf', fontWeight: 700 } // bold
+    { src: '/Roboto-Regular.ttf' }, // normal
+    { src: '/Roboto-Bold.ttf', fontWeight: 700 } // bold
   ]
 });
 
@@ -14,9 +13,7 @@ export const styles = StyleSheet.create({
   page: {
     padding: 40,
     fontFamily: 'Roboto',
-    fontSize: 11,
-    width: '100%',
-    height: '100%'
+    fontSize: 11
   },
   title: {
     fontSize: 16,
