@@ -1,5 +1,6 @@
 import { beckAnxietyCriteria } from '../data/assessments/beck-anxiety/criteria';
 import { beckDepressionCriteria } from '../data/assessments/beck-depression/criteria';
+import { beckSuicideCriteria } from '../data/assessments/beck-suicide/criteria';
 import { QuestionState } from '../types/questions';
 
 export function evaluateBeckTest(state: QuestionState, testType: string): string[] {
@@ -34,6 +35,10 @@ export function evaluateBeckTest(state: QuestionState, testType: string): string
     } else {
       diagnoses.push(scoring.severe.description);
     }
+  } else if (testType === 'beck-suicide') {
+    const { scoring } = beckSuicideCriteria;
+    diagnoses.push(`Toplam Puan: ${totalScore}`);
+    diagnoses.push(scoring.description);
   }
 
   return diagnoses;
